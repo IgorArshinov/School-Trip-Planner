@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:utilities="clr-namespace:SchoolTripPlannerXamarin.Utilities;assembly=SchoolTripPlannerXamarin"
+             xmlns:behaviors="clr-namespace:SchoolTripPlannerXamarin.Behaviors;assembly=SchoolTripPlannerXamarin"
+             mc:Ignorable="d"
+             x:Name="LoginPageName"
+             Title="{Binding Title}"
+             x:Class="SchoolTripPlannerXamarin.Views.LoginPage"
+             utilities:ViewModelLocator.AutoWireViewModel="True">
+    <ContentPage.Content>
+        <ScrollView>
+            <FlexLayout Direction="Column"
+                        AlignItems="Center"
+                        JustifyContent="SpaceEvenly">
+                <StackLayout x:Name="Header" Orientation="Vertical">
+                    <Label Text="Registreer uzelf door uw persoonlijke gegevens in te typen." />
+                </StackLayout>
+                <StackLayout x:Name="Body" Orientation="Vertical">
+                    <Label Text="Gebruiksnaam " />
+                    <Entry Placeholder="Gebruiksnaam" Text="{Binding Username, Mode=TwoWay}" />
+                    <Label Text="Wachtwoord" />
+                    <Entry IsPassword="True" Placeholder="Wachtwoord" Text="{Binding Password, Mode=TwoWay}" />
+                </StackLayout>
+                <StackLayout x:Name="Footer" Orientation="Vertical">
+                    <Button Text="Login" Command="{Binding LoginButtonCommand}"
+                            CommandParameter="{x:Reference LoginPageName}" />
+                </StackLayout>
+            </FlexLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

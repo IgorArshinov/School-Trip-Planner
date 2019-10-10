@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:behaviors="clr-namespace:SchoolTripPlannerXamarin.Behaviors;assembly=SchoolTripPlannerXamarin"
+             xmlns:utilities="clr-namespace:SchoolTripPlannerXamarin.Utilities;assembly=SchoolTripPlannerXamarin"
+             mc:Ignorable="d"
+             x:Class="SchoolTripPlannerXamarin.Views.SchoolTripDetailsPage"
+             Title="{Binding Title}"
+             utilities:ViewModelLocator.AutoWireViewModel="True">
+    <ContentPage.Content>
+        <ScrollView>
+            <FlexLayout Direction="Column"
+                        AlignItems="Center"
+                        JustifyContent="SpaceEvenly">
+                <StackLayout Spacing="20" Padding="15">
+                    <Label Text="Id:" FontSize="Medium" />
+                    <Label Text="{Binding SelectedSchoolTrip.Id}" FontSize="Small" />
+                    <Label Text="Titel:" FontSize="Medium" />
+                    <Label Text="{Binding SelectedSchoolTrip.Title}" FontSize="Small" />
+                </StackLayout>
+                <Button x:Name="AddScanButton" Text="Scan Toevoegen" Command="{Binding AddScanCommand}" />
+                <Picker x:Name="ScanPicker"
+                        Title="Scans"
+                        ItemsSource="{Binding Scans, Mode=TwoWay}"
+                        SelectedItem="{Binding SelectedScan, Mode=TwoWay}"
+                        ItemDisplayBinding="{Binding Title}" />
+                <ListView x:Name="ScanToddlersListView"
+                          ItemsSource="{Binding SelectedScan.ScanToddlers, Mode=TwoWay}"
+                          VerticalOptions="FillAndExpand"
+                          HasUnevenRows="true"
+                          RefreshCommand="{Binding RefreshScanToddlersCommand}"
+                          CachingStrategy="RecycleElement"
+                          SelectedItem="{Binding SelectedScanToddler, Mode=TwoWay}">
+                    <ListView.Behaviors>
+                        <behaviors:EventToCommandBehavior EventName="ItemSelected"
+                                                          Command="{Binding ScanToddlerSelectedCommand}"
+                                                          Converter="{StaticResource SelectedItemEventConverter}"
+                                                          CommandParameter="{Binding Source={x:Reference ScanToddlersListView}}" />
+                    </ListView.Behaviors>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Padding="10">
+                                    <Label Text="{Binding Toddler.Id}"
+                                           LineBreakMode="NoWrap"
+                                           Style="{DynamicResource ListItemDetailTextStyle}"
+                                           FontSize="13" />
+                                    <Label Text="{Binding Toddler.Name}"
+                                           LineBreakMode="NoWrap"
+                                           Style="{DynamicResource ListItemTextStyle}"
+                                           FontSize="16" />
+                                    <Label Text="{Binding ToddlerIsScanned}"
+                                           LineBreakMode="NoWrap"
+                                           Style="{DynamicResource ListItemTextStyle}"
+                                           FontSize="16" />
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </FlexLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

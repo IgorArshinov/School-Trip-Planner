@@ -1,0 +1,108 @@
+﻿<Page
+    x:Class="SchoolTripPlannerUWP.Views.PlanSchoolTripPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    Style="{StaticResource PageStyle}"
+    mc:Ignorable="d">
+    <Page.DataContext>
+        <Binding Path="PlanSchoolTripViewModel" Source="{StaticResource Locator}" />
+    </Page.DataContext>
+    <VisualStateManager.VisualStateGroups>
+        <VisualStateGroup>
+            <VisualState x:Name="LargeWindow">
+                <VisualState.StateTriggers>
+                    <AdaptiveTrigger MinWindowWidth="{StaticResource LargeWindowSnapPoint}" />
+                </VisualState.StateTriggers>
+            </VisualState>
+            <VisualState x:Name="MediumWindow">
+                <VisualState.StateTriggers>
+                    <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}" />
+                </VisualState.StateTriggers>
+            </VisualState>
+            <VisualState x:Name="SmallWindow">
+                <VisualState.StateTriggers>
+                    <AdaptiveTrigger MinWindowWidth="{StaticResource MinWindowSnapPoint}" />
+                </VisualState.StateTriggers>
+            </VisualState>
+        </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
+    <ScrollViewer HorizontalAlignment="Stretch" Name="ForegroundElement" VerticalScrollMode="Enabled"
+                  x:FieldModifier="public">
+        <RelativePanel x:Name="Content" Margin="30,30,30,0">
+            <StackPanel x:Name="Header" Margin="0,0,0,30" RelativePanel.AlignTopWithPanel="True"
+                        RelativePanel.AlignHorizontalCenterWithPanel="True">
+                <TextBlock Text="Plan een schooluitstap." />
+            </StackPanel>
+            <StackPanel x:Name="Body" RelativePanel.AlignVerticalCenterWithPanel="True"
+                        RelativePanel.Below="Header"
+                        RelativePanel.AlignHorizontalCenterWithPanel="True" Orientation="Vertical"
+                        Margin="0,0,0,30"
+                        Width="600">
+                <TextBox x:Name="TitleTextBox"
+                         extensions:TextBoxRegex.ValidationMode="Dynamic"
+                         extensions:TextBoxRegex.Regex="^[\p{L}]+$"
+                         Text="{Binding SchoolTrip.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ToTitleCaseConverter}}"
+                         Header="Titel:" PlaceholderText="Titel"
+                         HorizontalAlignment="Stretch" TextChanged="SchoolTripTextBox_TextChanged" />
+                <TextBlock Text="Start Datum:" />
+                <DatePicker x:Name="StartDatePicker" Header="Datum"
+                            Date="{Binding SchoolTrip.StartDate, Mode=TwoWay}" />
+                <TimePicker x:Name="StartTimePicker" Header="Tijd"
+                            Time="{Binding SchoolTrip.StartTime, Mode=TwoWay}" />
+                <TextBlock Text="Eind Datum:" />
+                <DatePicker x:Name="EndDatePicker" Header="Datum" Date="{Binding SchoolTrip.EndDate, Mode=TwoWay}" />
+                <TimePicker x:Name="EndTimePicker" Header="Tijd" Time="{Binding SchoolTrip.EndTime, Mode=TwoWay}" />
+                <RelativePanel HorizontalAlignment="Stretch">
+                    <TextBlock x:Name="ToddlersTextBlock" Text="Kinderen:" Width="300"
+                               RelativePanel.AlignLeftWithPanel="True" />
+                    <ListView x:Name="ToddlersListView" RelativePanel.Below="ToddlersTextBlock"
+                              ItemsSource="{Binding Toddlers}"
+                              SelectionMode="Multiple">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Height="100">
+                                    <TextBlock Text="Volledige Naam:" />
+                                    <TextBlock Padding="0,0,0,10" Text="{Binding FullName}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <interactivity:Interaction.Behaviors>
+                            <core:EventTriggerBehavior EventName="SelectionChanged">
+                                <core:InvokeCommandAction Command="{Binding UpdateSelectedToddlersCommand}"
+                                                          CommandParameter="{Binding ElementName=ToddlersListView}" />
+                            </core:EventTriggerBehavior>
+                        </interactivity:Interaction.Behaviors>
+                    </ListView>
+                    <TextBlock x:Name="TeachersTextBlock" Text="Leerkrachten:"
+                               RelativePanel.RightOf="ToddlersTextBlock" />
+                    <ListView x:Name="TeachersListView" RelativePanel.Below="TeachersTextBlock"
+                              RelativePanel.RightOf="ToddlersTextBlock"
+                              ItemsSource="{Binding Teachers}"
+                              SelectionMode="Single"
+                              SelectedItem="{Binding Teacher, Mode=TwoWay}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Height="100">
+                                    <TextBlock Text="Volledige Naam:" />
+                                    <TextBlock Padding="0,0,0,10" Text="{Binding FullName}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+
+                    </ListView>
+
+                </RelativePanel>
+
+            </StackPanel>
+            <StackPanel x:Name="Footer" RelativePanel.AlignBottomWithPanel="True" Margin="0,0,0,30"
+                        RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.Below="Body">
+                <Button x:Name="PlanButton" Content="Plannen" Command="{Binding PlanButtonCommand}" />
+            </StackPanel>
+        </RelativePanel>
+    </ScrollViewer>
+</Page>

@@ -1,0 +1,48 @@
+﻿<Page
+    x:Class="SchoolTripPlannerUWP.Views.ShellPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
+    xmlns:helpers="using:SchoolTripPlannerUWP.Helpers"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    mc:Ignorable="d">
+    <Page.DataContext>
+        <Binding Path="ShellViewModel" Source="{StaticResource Locator}" />
+    </Page.DataContext>
+    <i:Interaction.Behaviors>
+        <ic:EventTriggerBehavior EventName="Loaded">
+            <ic:InvokeCommandAction Command="{Binding LoadedCommand}" />
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+
+    <winui:NavigationView
+        x:Name="NavigationView"
+        IsBackButtonVisible="Visible"
+        IsBackEnabled="{Binding IsBackEnabled, Mode=OneWay}"
+        SelectedItem="{Binding Selected, Mode=OneWay}"
+        IsSettingsVisible="False"
+        PaneDisplayMode="Top"
+        Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
+        <winui:NavigationView.MenuItems>
+             <winui:NavigationViewItem x:Uid="Shell_SchoolTripsMaster"
+                                      helpers:NavigationHelper.NavigateTo="SchoolTripPlannerUWP.ViewModels.SchoolTripsMasterViewModel" />
+            <winui:NavigationViewItem x:Uid="Shell_RegisterToddler"
+                                      helpers:NavigationHelper.NavigateTo="SchoolTripPlannerUWP.ViewModels.RegisterToddlerViewModel" />
+            <winui:NavigationViewItem x:Uid="Shell_EditToddler"
+                                      helpers:NavigationHelper.NavigateTo="SchoolTripPlannerUWP.ViewModels.EditToddlerViewModel" />
+       <winui:NavigationViewItem x:Uid="Shell_PlanSchoolTrip"
+                                      helpers:NavigationHelper.NavigateTo="SchoolTripPlannerUWP.ViewModels.PlanSchoolTripViewModel" />
+        </winui:NavigationView.MenuItems>
+        <i:Interaction.Behaviors>
+            <ic:EventTriggerBehavior EventName="ItemInvoked">
+                <ic:InvokeCommandAction Command="{Binding ItemInvokedCommand}" />
+            </ic:EventTriggerBehavior>
+        </i:Interaction.Behaviors>
+        <Grid>
+            <Frame x:Name="ShellFrame" />
+        </Grid>
+    </winui:NavigationView>
+</Page>

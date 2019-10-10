@@ -1,0 +1,109 @@
+﻿<Page
+    x:Class="SchoolTripPlannerUWP.Views.EditToddlerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SchoolTripPlannerUWP.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
+    mc:Ignorable="d"
+
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.DataContext>
+        <Binding Path="EditToddlerViewModel" Source="{StaticResource Locator}" />
+    </Page.DataContext>
+    <VisualStateManager.VisualStateGroups>
+        <VisualStateGroup>
+            <VisualState x:Name="LargeWindow">
+                <VisualState.StateTriggers>
+                    <AdaptiveTrigger MinWindowWidth="{StaticResource LargeWindowSnapPoint}" />
+                </VisualState.StateTriggers>
+            </VisualState>
+            <VisualState x:Name="MediumWindow">
+                <VisualState.StateTriggers>
+                    <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}" />
+                </VisualState.StateTriggers>
+            </VisualState>
+            <VisualState x:Name="SmallWindow">
+                <VisualState.StateTriggers>
+                    <AdaptiveTrigger MinWindowWidth="{StaticResource MinWindowSnapPoint}" />
+                </VisualState.StateTriggers>
+
+            </VisualState>
+        </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
+    <ScrollViewer HorizontalAlignment="Stretch" Name="ForegroundElement" VerticalScrollMode="Enabled"
+                  x:FieldModifier="public">
+        <RelativePanel x:Name="Content" Margin="30,30,30,0">
+            <StackPanel x:Name="Header" Margin="0,0,0,30" RelativePanel.AlignTopWithPanel="True"
+                        RelativePanel.AlignHorizontalCenterWithPanel="True">
+                <TextBlock Text="Wijzig persoonlijke gegevens van een kind en print zijn badge." />
+            </StackPanel>
+            <StackPanel x:Name="Body" RelativePanel.AlignVerticalCenterWithPanel="True"
+                        RelativePanel.Below="Header"
+                        RelativePanel.AlignHorizontalCenterWithPanel="True" Orientation="Vertical"
+                        Margin="0,0,0,30"
+                        Width="300">
+                <TextBlock x:Name="ToddlersTextBlock" Text="Kinderen:" />
+                <ListView x:Name="ToddlersListView"
+                          ItemsSource="{Binding Toddlers, Mode=OneWay}"
+                          SelectionMode="Single" SelectedItem="{Binding Toddler, Mode=TwoWay}"
+                          HorizontalAlignment="Stretch">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Height="100">
+                                <TextBlock Text="Volledige Naam:" />
+                                <TextBlock Padding="0,0,0,10" Text="{Binding FullName}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <TextBox x:Name="SurnameTextBox"
+                         extensions:TextBoxRegex.ValidationMode="Dynamic"
+                         extensions:TextBoxRegex.Regex="^[\p{L}]+$"
+                         Text="{Binding ToddlerToEdit.Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ToTitleCaseConverter}}"
+                         Header="Achternaam:" PlaceholderText="Achternaam"
+                         HorizontalAlignment="Stretch">
+                    <interactivity:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="TextChanged">
+                            <core:InvokeCommandAction Command="{Binding GenerateQrCodeImageCommand}"
+                                                      CommandParameter="{Binding ElementName=SurnameTextBox}" />
+                        </core:EventTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
+                </TextBox>
+                <TextBox x:Name="NameTextBox"
+                         extensions:TextBoxRegex.ValidationMode="Dynamic"
+                         extensions:TextBoxRegex.Regex="^[\p{L}]+$"
+                         Text="{Binding ToddlerToEdit.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ToTitleCaseConverter}}"
+                         Header="Naam:" PlaceholderText="Naam" FontStyle="Normal"
+                         HorizontalAlignment="Stretch">
+                    <interactivity:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="TextChanged">
+                            <core:InvokeCommandAction Command="{Binding GenerateQrCodeImageCommand}"
+                                                      CommandParameter="{Binding ElementName=NameTextBox}" />
+                        </core:EventTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
+                </TextBox>
+                <ComboBox x:Name="ClassComboBox" HorizontalAlignment="Stretch" ItemsSource="{Binding Classes}"
+                          DisplayMemberPath="Name" SelectedValuePath="Id"
+                          SelectedValue="{Binding ToddlerToEdit.Class.Id, Mode=TwoWay}"
+                          PlaceholderText="Klassen" SelectedItem="{Binding ToddlerToEdit.Class, Mode=TwoWay}" />
+                <TextBlock Text="QR-code:" />
+                <TextBlock x:Name="QRCodeTextBox"
+                           HorizontalAlignment="Stretch" Text="{Binding ToddlerToEdit.QrCode, Mode=OneWay}" />
+                <Image x:Name="QRCodeImage" Source="{Binding ToddlerToEdit.QrCodeImageSource}" HorizontalAlignment="Stretch"
+                       Stretch="Uniform" />
+            </StackPanel>
+            <StackPanel x:Name="Footer" RelativePanel.AlignBottomWithPanel="True" RelativePanel.Below="Body"
+                        RelativePanel.AlignHorizontalCenterWithPanel="True" Margin="0,0,0,30">
+                <Canvas x:Name="PrintCanvas" Opacity="0" />
+                <Button x:Name="InvokePrintingButton" Content="Printen" Command="{Binding PrintButtonCommand}"
+                        IsEnabled="{Binding PrinterIsSupported}" />
+                <Button x:Name="EditButton" Content="Wijzig" Command="{Binding EditButtonCommand}" />
+            </StackPanel>
+
+        </RelativePanel>
+    </ScrollViewer>
+</Page>

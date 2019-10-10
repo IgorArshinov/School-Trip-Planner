@@ -1,0 +1,86 @@
+﻿<Page
+    x:Class="SchoolTripPlannerUWP.Views.SchoolTripsMasterPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Style="{StaticResource PageStyle}"
+    xmlns:views="using:SchoolTripPlannerUWP.Views"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:dtOs="using:SchoolTripPlannerUWP.Core.DTOs"
+    mc:Ignorable="d">
+    <Page.DataContext>
+        <Binding Path="SchoolTripsMasterViewModel" Source="{StaticResource Locator}" />
+    </Page.DataContext>
+    <VisualStateManager.VisualStateGroups>
+        <VisualStateGroup>
+            <VisualState x:Name="LargeWindow">
+                <VisualState.StateTriggers>
+                    <AdaptiveTrigger MinWindowWidth="{StaticResource LargeWindowSnapPoint}" />
+                </VisualState.StateTriggers>
+            </VisualState>
+            <VisualState x:Name="MediumWindow">
+                <VisualState.StateTriggers>
+                    <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}" />
+                </VisualState.StateTriggers>
+            </VisualState>
+            <VisualState x:Name="SmallWindow">
+                <VisualState.StateTriggers>
+                    <AdaptiveTrigger MinWindowWidth="{StaticResource MinWindowSnapPoint}" />
+                </VisualState.StateTriggers>
+            </VisualState>
+        </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
+    <Page.Resources>
+        <DataTemplate x:Key="ItemTemplate" x:DataType="dtOs:SchoolTripDTO">
+            <RelativePanel Margin="30,30,30,0" RelativePanel.AlignTopWithPanel="True"
+                           RelativePanel.AlignHorizontalCenterWithPanel="True">
+                <StackPanel Margin="0,0,0,30">
+                    <TextBlock Text="{Binding Title}" />
+                    <TextBlock Text="{Binding StartDateTime, Converter={StaticResource DateConverter}}" />
+                    <TextBlock Text="{Binding EndDateTime, Converter={StaticResource DateConverter}}" />
+                    <TextBlock Text="{Binding Duration, Converter={StaticResource TimeSpanConverter}}" />
+                    <TextBlock
+                        Text="{Binding CurrentState, Converter={StaticResource CurrentStateToStringConverter}}" />
+                </StackPanel>
+
+            </RelativePanel>
+        </DataTemplate>
+        <DataTemplate x:Key="DetailsTemplate">
+            <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <views:SchoolTripsDetailsControl />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="NoSelectionContentTemplate">
+            <Grid Background="{ThemeResource AppBarBackgroundThemeBrush}">
+                <TextBlock x:Uid="SchoolTripsMaster_NoSelection"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           TextAlignment="Center" />
+            </Grid>
+        </DataTemplate>
+
+    </Page.Resources>
+    <Grid x:Name="ContentArea" Grid.Row="1">
+        <controls:MasterDetailsView
+            x:Name="SchoolTripsMaster"
+            x:Uid="SchoolTripsMaster"
+            BackButtonBehavior="Automatic"
+            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
+            BorderBrush="Transparent"
+            DetailsTemplate="{StaticResource DetailsTemplate}"
+            ItemsSource="{Binding SchoolTrips}"
+            ItemTemplate="{StaticResource ItemTemplate}"
+            NoSelectionContentTemplate="{StaticResource NoSelectionContentTemplate}"
+            SelectedItem="{Binding SelectedSchoolTrip, Mode=TwoWay}">
+            <interactivity:Interaction.Behaviors>
+                <core:EventTriggerBehavior EventName="Loaded">
+                    <core:InvokeCommandAction Command="{Binding MasterDetailsViewLoadedCommand}"
+                                              CommandParameter="{Binding ElementName=SchoolTripsMaster}" />
+                </core:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
+        </controls:MasterDetailsView>
+    </Grid>
+</Page>

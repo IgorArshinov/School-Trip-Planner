@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>SchoolTripPlannerUWP.Core</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Contracts\Services\General\IDialogService.cs" />
+    <Compile Remove="Contracts\Services\General\INavigationService.cs" />
+    <Compile Remove="Contracts\Services\General\ISettingsService.cs" />
+    <Compile Remove="DTOs\ScanToddlerDTO.cs" />
+    <Compile Remove="Services\General\DialogService.cs" />
+    <Compile Remove="Services\General\NavigationService.cs" />
+    <Compile Remove="Services\General\SettingsService.cs" />
+    <Compile Remove="Services\SampleDataService.cs" />
+  </ItemGroup>
+
+   <ItemGroup>
+     <PackageReference Include="akavache" Version="6.5.20" />
+     <PackageReference Include="AutoMapper" Version="9.0.0" />
+     <PackageReference Include="MvvmLightStd10" Version="5.4.1.2" />
+     <PackageReference Include="Polly" Version="4.3.0" />
+     <PackageReference Include="Xam.Plugin.Connectivity" Version="2.2.12" />
+   </ItemGroup>
+
+   <ItemGroup>
+     <Reference Include="Windows.Foundation.UniversalApiContract">
+       <HintPath>C:\Program Files (x86)\Windows Kits\10\References\10.0.17763.0\Windows.Foundation.UniversalApiContract\7.0.0.0\Windows.Foundation.UniversalApiContract.winmd</HintPath>
+     </Reference>
+   </ItemGroup>
+</Project>

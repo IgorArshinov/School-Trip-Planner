@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:utilities="clr-namespace:SchoolTripPlannerXamarin.Utilities;assembly=SchoolTripPlannerXamarin"
+             mc:Ignorable="d"
+             x:Class="SchoolTripPlannerXamarin.Views.ScanToddlerDetailsPage"
+             utilities:ViewModelLocator.AutoWireViewModel="True">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="CancelToolbarItem" Text="Annuleren" Command="{Binding CancelToolbarItemCommand}" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <ScrollView>
+            <FlexLayout Direction="Column"
+                        AlignItems="Center"
+                        JustifyContent="SpaceEvenly">
+                <StackLayout Padding="10">
+                    <Label Text="{Binding ScanToddler.Toddler.Id}"
+
+                           LineBreakMode="NoWrap"
+                           Style="{DynamicResource ListItemDetailTextStyle}"
+                           FontSize="13" />
+                    <Label Text="{Binding ScanToddler.Toddler.Name}"
+
+                           LineBreakMode="NoWrap"
+                           Style="{DynamicResource ListItemTextStyle}"
+                           FontSize="16" />
+                    <Label Text="{Binding ScanToddler.ToddlerIsScanned}"
+
+                           LineBreakMode="NoWrap"
+                           Style="{DynamicResource ListItemTextStyle}"
+                           FontSize="16" />
+                    <Button x:Name="ScanButton" Text="Scan kind" Command="{Binding ScanCommand}" />
+                </StackLayout>
+            </FlexLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

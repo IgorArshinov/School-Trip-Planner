@@ -1,0 +1,105 @@
+﻿<UserControl
+    x:Class="SchoolTripPlannerUWP.Views.SchoolTripsDetailsControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <Control.DataContext>
+        <Binding Path="SchoolTripsDetailsViewModel" Source="{StaticResource Locator}" />
+    </Control.DataContext>
+    <ScrollViewer
+        Name="ForegroundElement"
+        HorizontalAlignment="Stretch"
+        VerticalScrollMode="Enabled" x:FieldModifier="public">
+        <interactivity:Interaction.Behaviors>
+            <core:EventTriggerBehavior EventName="Loaded">
+                <core:InvokeCommandAction Command="{Binding OnLoadedCommand}" />
+            </core:EventTriggerBehavior>
+            <core:EventTriggerBehavior EventName="Unloaded">
+                <core:InvokeCommandAction Command="{Binding OnUnloadedCommand}" />
+            </core:EventTriggerBehavior>
+        </interactivity:Interaction.Behaviors>
+        <RelativePanel x:Name="Content" Margin="30,30,30,0" DataContext="{Binding SelectedSchoolTrip}">
+            <StackPanel Padding="0,0,0,30" RelativePanel.AlignHorizontalCenterWithPanel="True" Width="200">
+
+                <TextBlock Text="Id:" />
+                <TextBlock Padding="0,0,0,10" Text="{Binding  Id  }" />
+                <TextBlock Text="Titel:" />
+                <TextBlock Padding="0,0,0,10" Text="{Binding  Title  }" />
+                <TextBlock Text="Toestand:" />
+                <TextBlock Padding="0,0,0,10"
+                           Text="{Binding  CurrentState,  Converter={StaticResource CurrentStateToStringConverter}}" />
+                <TextBlock Text="Looptijd:" />
+                <TextBlock Padding="0,0,0,10"
+                           Text="{Binding  Duration,  Converter={StaticResource TimeSpanConverter}}" />
+                <TextBlock Text="Begindatum:" />
+                <TextBlock Padding="0,0,0,10"
+                           Text="{Binding  StartDateTime,  Converter={StaticResource DateConverter}}" />
+                <TextBlock Text="Einddatum:" />
+                <TextBlock Padding="0,0,0,10"
+                           Text="{Binding  EndDateTime,  Converter={StaticResource DateConverter}}" />
+                <TextBlock Text="Begeleider:" />
+                <TextBlock Padding="0,0,0,10" Text="{Binding Teacher.FullName}" />
+                <TextBlock Text="Kleuters:" />
+                <ListView x:Name="SchoolTripToddlersListView"
+                          ItemsSource="{Binding SchoolTripToddlers}"
+                          SelectionMode="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="Id:" />
+                                <TextBlock Padding="0,0,0,10" Text="{Binding ToddlerId}" />
+                                <TextBlock Text="Volledige naam:" />
+                                <TextBlock Padding="0,0,0,10" Text="{Binding Toddler.FullName}" />
+                                <TextBlock Text="QR-Code:" />
+                                <TextBlock Padding="0,0,0,10" Text="{Binding Toddler.QrCode}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <TextBlock Text="Scans:" />
+                <ListView x:Name="ToddlersListView"
+                          ItemsSource="{Binding  Scans}"
+                          SelectionMode="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+
+                                <TextBlock Text="Id:" />
+                                <TextBlock Padding="0,0,0,10" Text="{Binding Id}" />
+                                <TextBlock Text="Titel:" />
+                                <TextBlock Padding="0,0,0,10" Text="{Binding Title}" />
+                                <TextBlock Text="Datum:" />
+                                <TextBlock Padding="0,0,0,10" Text="{Binding CreatedDateTime}" />
+                                <TextBlock Text="Kleuters:" />
+                                <ListView x:Name="ToddlerScansListView"
+                                          ItemsSource="{Binding ScanToddlers}"
+                                          SelectionMode="None">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Text="Id:" />
+                                                <TextBlock Padding="0,0,0,10" Text="{Binding ToddlerId}" />
+                                                <TextBlock Text="Volledige naam:" />
+                                                <TextBlock Padding="0,0,0,10" Text="{Binding Toddler.FullName}" />
+                                                <TextBlock Text="Is gescand:" />
+                                                <TextBlock Padding="0,0,0,10" Text="{Binding ToddlerIsScanned}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+            </StackPanel>
+        </RelativePanel>
+    </ScrollViewer>
+
+</UserControl>
