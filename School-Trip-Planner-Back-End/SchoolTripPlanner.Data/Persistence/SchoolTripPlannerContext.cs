@@ -7,9 +7,9 @@ using Toddler = SchoolTripPlanner.Domain.Models.Toddler;
 
 namespace SchoolTripPlanner.Data.Persistence
 {
-    public class ToddlerScanContext : DbContext, IToddlerScanContext
+    public class SchoolTripPlannerContext : DbContext, ISchoolTripPlannerContext
     {
-        public ToddlerScanContext(DbContextOptions<ToddlerScanContext> options)
+        public SchoolTripPlannerContext(DbContextOptions<SchoolTripPlannerContext> options)
             : base(options)
         {
         }
@@ -36,7 +36,10 @@ namespace SchoolTripPlanner.Data.Persistence
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                "Server = (localdb)\\mssqllocaldb; Database = SchoolTripPlannerData; Trusted_Connection = True; ");
+                "Server=den1.mssql8.gear.host;Database=schooltripapp;uid=schooltripapp;pwd=Uj4I_RHjQ16-;");
+
+            //           optionsBuilder.UseSqlServer(
+//                "Server = (localdb)\\mssqllocaldb; Database = SchoolTripPlannerData; Trusted_Connection = True; ");
             //            optionsBuilder.UseSqlServer(
             //                "Server = tcp:schooltripplannerdbserver.database.windows.net,1433; Initial Catalog = SchoolTripPlanner_db; Persist Security Info = True; User ID = schooltriplanneradmin; Password =123456Azeaze; MultipleActiveResultSets = False; Encrypt = True; TrustServerCertificate = True;");
         }

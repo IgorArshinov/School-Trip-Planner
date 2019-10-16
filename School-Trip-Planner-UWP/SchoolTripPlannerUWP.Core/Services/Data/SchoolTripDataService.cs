@@ -21,25 +21,23 @@ namespace SchoolTripPlannerUWP.Core.Services.Data
 
         public async Task<IEnumerable<SchoolTrip>> GetAllSchoolTripsAsync()
         {
-            List<SchoolTrip> schooltripsFromCache = await GetFromCache<List<SchoolTrip>>(CacheNameConstants.AllSchoolTrips);
+            List<SchoolTrip> schoolTripsFromCache = await GetFromCache<List<SchoolTrip>>(CacheNameConstants.AllSchoolTrips);
 
-            if (schooltripsFromCache != null) 
+            if (schoolTripsFromCache != null)
             {
-                return schooltripsFromCache;
+                return schoolTripsFromCache;
             }
-            else
+
+            UriBuilder builder = new UriBuilder(ApiConstants.BaseApiUrl)
             {
-                UriBuilder builder = new UriBuilder(ApiConstants.BaseApiUrl)
-                {
-                    Path = ApiConstants.BaseApiUriPart + ApiConstants.GetSchoolTripsEndpoint,
-                };
+                Path = ApiConstants.BaseApiUriPart + ApiConstants.GetSchoolTripsEndpoint,
+            };
 
-                var schooltrips = await _genericRepository.GetAsync<List<SchoolTrip>>(builder.ToString());
+            var schoolTrips = await _genericRepository.GetAsync<List<SchoolTrip>>(builder.ToString());
 
-                await Cache.InsertObject(CacheNameConstants.AllSchoolTrips, schooltrips, DateTimeOffset.Now.AddSeconds(20));
+            await Cache.InsertObject(CacheNameConstants.AllSchoolTrips, schoolTrips, DateTimeOffset.Now.AddSeconds(20));
 
-                return schooltrips;
-            }
+            return schoolTrips;
         }
 
         public async Task<SchoolTrip> GetSchoolTripByIdAsync(long id)
@@ -70,9 +68,7 @@ namespace SchoolTripPlannerUWP.Core.Services.Data
                 Path = ApiConstants.BaseApiUriPart + ApiConstants.PostSchoolTripEndpoint
             };
 
-            var result = await _genericRepository.PostAsync(builder.ToString(), schoolTrip);
-
-            return schoolTrip;
+            return await _genericRepository.PostAsync(builder.ToString(), schoolTrip);
         }
     }
 }

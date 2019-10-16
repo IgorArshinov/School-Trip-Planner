@@ -1,6 +1,11 @@
 ﻿using Akavache;
 using AutoMapper;
 using GalaSoft.MvvmLight.Command;
+using SchoolTripPlannerUWP.Core.Constants;
+using SchoolTripPlannerUWP.Core.Contracts.Services.Data;
+using SchoolTripPlannerUWP.Core.DTOs;
+using SchoolTripPlannerUWP.Core.Models;
+using SchoolTripPlannerUWP.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,13 +13,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using SchoolTripPlannerUWP.Extensions;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using SchoolTripPlannerUWP.Core.Constants;
-using SchoolTripPlannerUWP.Core.Contracts.Services.Data;
-using SchoolTripPlannerUWP.Core.DTOs;
-using SchoolTripPlannerUWP.Core.Models;
 
 namespace SchoolTripPlannerUWP.ViewModels
 {

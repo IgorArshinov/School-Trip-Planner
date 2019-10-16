@@ -47,11 +47,10 @@ namespace SchoolTripPlannerXamarin.Services.Repository
                 }
 
                 throw new HttpRequestExceptionEx(responseMessage.StatusCode, jsonResult);
-
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"{ e.GetType().Name + " : " + e.Message}");
+                Debug.WriteLine($"{e.GetType().Name + " : " + e.Message}");
                 throw;
             }
         }
@@ -64,7 +63,6 @@ namespace SchoolTripPlannerXamarin.Services.Repository
 
                 var content = new StringContent(JsonConvert.SerializeObject(data));
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                Debug.WriteLine("content: " + content.ReadAsStringAsync().Result);
                 string jsonResult = string.Empty;
 
                 var responseMessage = await Policy
@@ -94,11 +92,10 @@ namespace SchoolTripPlannerXamarin.Services.Repository
                 }
 
                 throw new HttpRequestExceptionEx(responseMessage.StatusCode, jsonResult);
-
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"{ e.GetType().Name + " : " + e.Message}");
+                Debug.WriteLine($"{e.GetType().Name + " : " + e.Message}");
                 throw;
             }
         }
@@ -111,7 +108,6 @@ namespace SchoolTripPlannerXamarin.Services.Repository
 
                 var content = new StringContent(JsonConvert.SerializeObject(data));
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                Debug.WriteLine("content: " + content.ReadAsStringAsync().Result);
                 string jsonResult = string.Empty;
 
                 var responseMessage = await Policy
@@ -141,11 +137,10 @@ namespace SchoolTripPlannerXamarin.Services.Repository
                 }
 
                 throw new HttpRequestExceptionEx(responseMessage.StatusCode, jsonResult);
-
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"{ e.GetType().Name + " : " + e.Message}");
+                Debug.WriteLine($"{e.GetType().Name + " : " + e.Message}");
                 throw;
             }
         }
@@ -158,7 +153,6 @@ namespace SchoolTripPlannerXamarin.Services.Repository
 
                 var content = new StringContent(JsonConvert.SerializeObject(data));
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                Debug.WriteLine("content: " + content.ReadAsStringAsync().Result);
                 string jsonResult = string.Empty;
 
                 var responseMessage = await Policy
@@ -188,11 +182,10 @@ namespace SchoolTripPlannerXamarin.Services.Repository
                 }
 
                 throw new HttpRequestExceptionEx(responseMessage.StatusCode, jsonResult);
-
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"{ e.GetType().Name + " : " + e.Message}");
+                Debug.WriteLine($"{e.GetType().Name + " : " + e.Message}");
                 throw;
             }
         }
@@ -205,8 +198,6 @@ namespace SchoolTripPlannerXamarin.Services.Repository
 
                 var content = new StringContent(JsonConvert.SerializeObject(data));
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                Debug.WriteLine("content: " + content.ReadAsStringAsync().Result);
-
                 string jsonResult = string.Empty;
 
                 var responseMessage = await Policy
@@ -236,11 +227,10 @@ namespace SchoolTripPlannerXamarin.Services.Repository
                 }
 
                 throw new HttpRequestExceptionEx(responseMessage.StatusCode, jsonResult);
-
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"{ e.GetType().Name + " : " + e.Message}");
+                Debug.WriteLine($"{e.GetType().Name + " : " + e.Message}");
                 throw;
             }
         }
@@ -260,6 +250,7 @@ namespace SchoolTripPlannerXamarin.Services.Repository
             {
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
             }
+
             return httpClient;
         }
     }

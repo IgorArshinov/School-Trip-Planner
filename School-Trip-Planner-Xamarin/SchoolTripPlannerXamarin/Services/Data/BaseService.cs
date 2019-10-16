@@ -29,7 +29,7 @@ namespace SchoolTripPlannerXamarin.Services.Data
 
         public void InvalidateCache()
         {
-            Cache.InvalidateAllObjects<object>();
+            Cache.InvalidateAll();
         }
     }
 }

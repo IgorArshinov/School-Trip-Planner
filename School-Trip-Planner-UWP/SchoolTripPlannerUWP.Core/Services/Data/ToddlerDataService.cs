@@ -40,20 +40,6 @@ namespace SchoolTripPlannerUWP.Core.Services.Data
             return toddlers;
         }
 
-        public async Task<IEnumerable<Toddler>> GetAllToddlersAfterEditAsync()
-        {
-            UriBuilder builder = new UriBuilder(ApiConstants.BaseApiUrl)
-            {
-                Path = ApiConstants.BaseApiUriPart + ApiConstants.GetToddlersEndpoint,
-            };
-
-            var toddlers = await _genericRepository.GetAsync<List<Toddler>>(builder.ToString());
-
-            await Cache.InsertObject(CacheNameConstants.AllToddlers, toddlers, DateTimeOffset.Now.AddSeconds(20));
-
-            return toddlers;
-        }
-
         public async Task<Toddler> GetToddlerByIdAsync(long id)
         {
             Toddler toddlerFromCache = await GetFromCache<Toddler>(CacheNameConstants.ToddlerById + id);
@@ -82,9 +68,7 @@ namespace SchoolTripPlannerUWP.Core.Services.Data
                 Path = ApiConstants.BaseApiUriPart + ApiConstants.PostToddlerEndpoint
             };
 
-            var result = await _genericRepository.PostAsync<Toddler>(builder.ToString(), toddler);
-
-            return toddler;
+            return await _genericRepository.PostAsync<Toddler>(builder.ToString(), toddler);
         }
 
         public async Task<Toddler> PutToddler(long toddlerId, Toddler toddler)
@@ -96,9 +80,7 @@ namespace SchoolTripPlannerUWP.Core.Services.Data
                 Path = ApiConstants.BaseApiUriPart + ApiConstants.PutToddlerEndpoint + toddlerId
             };
 
-            var result = await _genericRepository.PutAsync<Toddler>(builder.ToString(), toddler);
-            ;
-            return result;
+            return await _genericRepository.PutAsync<Toddler>(builder.ToString(), toddler);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace SchoolTripPlannerXamarin.Services.Data
 
             UriBuilder builder = new UriBuilder(ApiConstants.BaseApiUrl)
             {
-                Path = ApiConstants.BaseApiUriPart + ApiConstants.ScanToddlerUpdateEndpoint + id
+                Path = ApiConstants.BaseApiUriPart + ApiConstants.PutScanToddlerEndpoint + id
             };
 
             return await _genericRepository.PutAsync(builder.ToString(), updatedScanToddler);

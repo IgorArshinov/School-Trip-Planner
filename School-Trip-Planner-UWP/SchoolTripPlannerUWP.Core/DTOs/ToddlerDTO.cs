@@ -30,6 +30,7 @@ namespace SchoolTripPlannerUWP.Core.DTOs
             get => _classId;
             set => Set(ref _classId, value);
         }
+
         public string QrCode => Surname + Name;
 
         public string Name

@@ -43,7 +43,7 @@ namespace SchoolTripPlannerXamarin.ViewModels
 
         private async void CancelAddNewScan()
         {
-            await _navigationService.NavigateBackAsync();
+            await _navigationService.NavigateBackModallyAsync();
         }
 
         private async void ScanQrCode()
@@ -59,22 +59,21 @@ namespace SchoolTripPlannerXamarin.ViewModels
                         if (result.Text.Equals(ScanToddler.Toddler.QrCode))
                         {
                             ScanToddler.ToddlerIsScanned = true;
-                            //                    ToddlerIsScanned = true;
+
                             var scanToddler = _mapper.Map<ScanToddler>(ScanToddler);
                             await _scanToddlerDataService.UpdateScanToddler(scanToddler.ToddlerId, scanToddler);
                             await BlobCache.LocalMachine.Invalidate(CacheNameConstants.SchoolTripById + ScanToddler.Scan.SchoolTripId);
-//                            MessagingCenter.Send(this, MessagingConstants.ScanToddlerUpdated, ScanToddler);
                         }
 
                         Device.BeginInvokeOnMainThread(async () =>
                         {
-                            await _navigationService.NavigateBackAsync();
-                            //         Shell.Current.Navigation.PopAsync();
-                            await _dialogService.ShowDialog(result.Text, DialogConstants.Barcode, DialogConstants.Ok);
+                            await _navigationService.NavigateBackModallyAsync();
+                            await _dialogService.ShowAlert($"Barcode is {result.Text}.\nKleuter is gescand.", DialogConstants.Info, DialogConstants.Ok);
+                            await _navigationService.NavigateBackModallyAsync();
                         });
                     };
 
-                    await Shell.Current.Navigation.PushAsync(scanPage);
+                    await _navigationService.NavigateToPageModallyAsync(scanPage);
                 }
                 catch (Exception exception)
                 {

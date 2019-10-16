@@ -6,7 +6,7 @@ namespace SchoolTripPlannerXamarin.Services.General
 {
     public class DialogService : IDialogService
     {
-        public Task ShowDialog(string message, string title, string buttonLabel)
+        public Task ShowAlert(string message, string title, string buttonLabel)
         {
             return UserDialogs.Instance.AlertAsync(message, title, buttonLabel);
         }

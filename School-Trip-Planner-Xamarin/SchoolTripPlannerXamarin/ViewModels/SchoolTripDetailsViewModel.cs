@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
-using SchoolTripPlannerXamarin.Constants;
 using SchoolTripPlannerXamarin.Contracts.Services.Data;
 using SchoolTripPlannerXamarin.Contracts.Services.General;
 using SchoolTripPlannerXamarin.DTOs;
-using SchoolTripPlannerXamarin.Extenstions;
 using System;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -15,9 +12,8 @@ namespace SchoolTripPlannerXamarin.ViewModels
 {
     public class SchoolTripDetailsViewModel : ViewModelBase
     {
-        private SchoolTripDTO _selectedSchoolTrip = new SchoolTripDTO();
+        private SchoolTripDTO _selectedSchoolTrip;
         private ScanDTO _selectedScan;
-        private ObservableCollection<ScanDTO> _scans;
         private ScanToddlerDTO _selectedScanToddler;
         private readonly ISchoolTripDataService _schoolTripDataService;
         private readonly INavigationService _navigationService;
@@ -43,12 +39,6 @@ namespace SchoolTripPlannerXamarin.ViewModels
             set => Set(ref _selectedScanToddler, value);
         }
 
-        public ObservableCollection<ScanDTO> Scans
-        {
-            get => _scans;
-            set => Set(ref _scans, value);
-        }
-
         public SchoolTripDetailsViewModel(IMapper mapper, INavigationService navigationService, ISchoolTripDataService schoolTripDataService)
         {
             Title = "Schooluitstap Details";
@@ -56,33 +46,32 @@ namespace SchoolTripPlannerXamarin.ViewModels
             _schoolTripDataService = schoolTripDataService;
             _mapper = mapper;
             AddScanCommand = new Command(NavigateToNewSchoolTripScanPage);
-            ScanToddlerSelectedCommand = new Command<ListView>(ScanToddlerSelected);
-            MessagingCenter.Subscribe<NewSchoolTripScanViewModel, ScanDTO>(this, MessagingConstants.AddSchoolTripScan, (sender, newScan) => AddSchoolTripScan(sender, newScan));
+            ScanToddlerSelectedCommand = new Command(ScanToddlerSelected);
+
+//            MessagingCenter.Subscribe<NewSchoolTripScanViewModel, SchoolTripDTO>(this, MessagingConstants.AddSchoolTripScan,
+//                (sender, schoolTripWithNewScan) => AddSchoolTripScan(sender, schoolTripWithNewScan));
         }
 
-        private void ScanToddlerSelected(ListView listView)
+//        private void Appearing(object sender, EventArgs e)
+//        {
+//            Debug.WriteLine("SelectedSchoolTrip: " + SelectedSchoolTrip);
+//        }
+
+        private void ScanToddlerSelected()
         {
-            var scanToddler = listView.SelectedItem as ScanToddlerDTO;
-            if (scanToddler == null)
+            if (SelectedScanToddler == null)
                 return;
-            scanToddler.Scan = SelectedScan;
-            _navigationService.NavigateToModallyAsync(typeof(ScanToddlerDetailsViewModel), scanToddler);
+            SelectedScanToddler.Scan = SelectedScan;
+            SelectedScanToddler.ScanId = SelectedScan.Id;
+            _navigationService.NavigateToModallyAsync(typeof(ScanToddlerDetailsViewModel), SelectedScanToddler);
 
             SelectedScanToddler = null;
         }
 
-        private void AddSchoolTripScan(NewSchoolTripScanViewModel sender, ScanDTO createdScan)
-        {
-            try
-            {
-                Scans.Add(createdScan);
-                SelectedSchoolTrip.Scans.Add(createdScan);
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
-            }
-        }
+//        private void AddSchoolTripScan(NewSchoolTripScanViewModel sender, SchoolTripDTO schoolTripWithNewScan)
+//        {
+////            SelectedSchoolTrip = schoolTripWithNewScan;
+//        }
 
         public override async Task InitializeAsync(object parameter)
         {
@@ -90,8 +79,6 @@ namespace SchoolTripPlannerXamarin.ViewModels
             {
                 var schoolTrip = await _schoolTripDataService.GetSchoolTripByIdAsync((long) parameter);
                 SelectedSchoolTrip = _mapper.Map<SchoolTripDTO>(schoolTrip);
-
-                Scans = SelectedSchoolTrip.Scans.ToObservableCollection();
             }
             catch (Exception exception)
             {
@@ -99,13 +86,14 @@ namespace SchoolTripPlannerXamarin.ViewModels
             }
 
             var currentPage = _navigationService.CurrentPage;
-            currentPage.Disappearing += Disappearing;
+//            currentPage.Disappearing += Disappearing;
+//            currentPage.Appearing += Appearing;
         }
 
-        private void Disappearing(object sender, EventArgs eventArgs)
-        {
-            MessagingCenter.Unsubscribe<NewSchoolTripScanViewModel, ScanDTO>(this, MessagingConstants.AddSchoolTripScan);
-        }
+//        private void Disappearing(object sender, EventArgs eventArgs)
+//        {
+//            MessagingCenter.Unsubscribe<NewSchoolTripScanViewModel, ScanDTO>(this, MessagingConstants.AddSchoolTripScan);
+//        }
 
         public async void NavigateToNewSchoolTripScanPage()
         {

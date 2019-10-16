@@ -27,14 +27,14 @@ namespace SchoolTripPlanner
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-            services.AddDbContext<Data.Persistence.ToddlerScanContext>(
+            services.AddDbContext<Data.Persistence.SchoolTripPlannerContext>(
                 options => options.UseSqlServer(
                     Configuration.GetConnectionString("SchoolTripPlannerConnection"))
             );
 
             services.AddAutoMapper(typeof(GeneralProfile));
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<IToddlerScanContext, ToddlerScanContext>();
+            services.AddTransient<ISchoolTripPlannerContext, SchoolTripPlannerContext>();
             services.AddTransient<ITeacherRepository, TeacherRepository>();
             services.AddTransient<ISchoolTripRepository, SchoolTripRepository>();
             services.AddTransient<IClassRepository, ClassRepository>();

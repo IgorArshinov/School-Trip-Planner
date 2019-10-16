@@ -50,7 +50,6 @@ namespace SchoolTripPlannerXamarin.ViewModels
             long.TryParse(_settingsService.TeacherIdSetting, out var id);
             if (_connectionService.IsConnected)
             {
-//                Teacher = await _teacherDataService.GetTeacherByIdAsync(id);
                 Teacher = await _syncService.GetLastModifiedTeacherAccount();
             }
             else
@@ -74,14 +73,14 @@ namespace SchoolTripPlannerXamarin.ViewModels
                     {
                         await _syncService.SaveTeacherToLocalDatabase(authenticationResponse.Teacher);
                         await BlobCache.LocalMachine.Invalidate(CacheNameConstants.TeacherById + authenticationResponse.Teacher.Id);
-                        await _dialogService.ShowDialog("Uw gegevens zijn succesvol gewijzigd!", DialogConstants.Info, DialogConstants.Ok);
+                        await _dialogService.ShowAlert("Uw gegevens zijn succesvol gewijzigd!", DialogConstants.Info, DialogConstants.Ok);
                     }
                 }
                 catch (HttpRequestExceptionEx exception)
                 {
                     if (exception.HttpCode == HttpStatusCode.BadRequest)
                     {
-                        await _dialogService.ShowDialog("Deze gebruikersnaam wordt al gebruikt!", DialogConstants.Fout, DialogConstants.Ok);
+                        await _dialogService.ShowAlert("Deze gebruikersnaam wordt al gebruikt!", DialogConstants.Info, DialogConstants.Ok);
                     }
 
                     Debug.WriteLine(exception);
@@ -97,7 +96,7 @@ namespace SchoolTripPlannerXamarin.ViewModels
                 await _syncService.SaveTeacherToLocalDatabase(Teacher);
                 _settingsService.TeacherAccountNeedsUpdate = bool.TrueString;
 
-                await _dialogService.ShowDialog("Uw gegevens zullen worden bijgewerkt, wanneer er een internetverbinding is!", DialogConstants.Fout, DialogConstants.Ok);
+                await _dialogService.ShowAlert("Uw gegevens zullen worden bijgewerkt, wanneer er een internetverbinding is!", DialogConstants.Info, DialogConstants.Ok);
             }
         }
     }

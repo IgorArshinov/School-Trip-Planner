@@ -10,6 +10,7 @@
              x:Class="SchoolTripPlannerXamarin.Views.SchoolTripDetailsPage"
              Title="{Binding Title}"
              utilities:ViewModelLocator.AutoWireViewModel="True">
+
     <ContentPage.Content>
         <ScrollView>
             <FlexLayout Direction="Column"
@@ -24,9 +25,10 @@
                 <Button x:Name="AddScanButton" Text="Scan Toevoegen" Command="{Binding AddScanCommand}" />
                 <Picker x:Name="ScanPicker"
                         Title="Scans"
-                        ItemsSource="{Binding Scans, Mode=TwoWay}"
+                        ItemsSource="{Binding SelectedSchoolTrip.Scans}"
                         SelectedItem="{Binding SelectedScan, Mode=TwoWay}"
                         ItemDisplayBinding="{Binding Title}" />
+
                 <ListView x:Name="ScanToddlersListView"
                           ItemsSource="{Binding SelectedScan.ScanToddlers, Mode=TwoWay}"
                           VerticalOptions="FillAndExpand"
@@ -37,8 +39,7 @@
                     <ListView.Behaviors>
                         <behaviors:EventToCommandBehavior EventName="ItemSelected"
                                                           Command="{Binding ScanToddlerSelectedCommand}"
-                                                          Converter="{StaticResource SelectedItemEventConverter}"
-                                                          CommandParameter="{Binding Source={x:Reference ScanToddlersListView}}" />
+                                                          Converter="{StaticResource SelectedItemEventConverter}" />
                     </ListView.Behaviors>
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -47,7 +48,7 @@
                                     <Label Text="{Binding Toddler.Id}"
                                            LineBreakMode="NoWrap"
                                            Style="{DynamicResource ListItemDetailTextStyle}"
-                                           FontSize="13" />
+                                           FontSize="16" />
                                     <Label Text="{Binding Toddler.Name}"
                                            LineBreakMode="NoWrap"
                                            Style="{DynamicResource ListItemTextStyle}"

@@ -1,5 +1,4 @@
 ﻿using Akavache;
-using SchoolTripPlannerUWP.Core.Models;
 using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -15,7 +14,6 @@ namespace SchoolTripPlannerUWP.Core.Services.Data
         {
             Cache = cache ?? BlobCache.LocalMachine;
         }
-      
 
         public async Task<T> GetFromCache<T>(string cacheName)
         {
@@ -32,7 +30,7 @@ namespace SchoolTripPlannerUWP.Core.Services.Data
 
         public void InvalidateCache()
         {
-            Cache.InvalidateAllObjects<SchoolTrip>();
+            Cache.InvalidateAll();
         }
     }
 }

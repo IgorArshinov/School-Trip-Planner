@@ -65,7 +65,6 @@ namespace SchoolTripPlannerUWP.Core.Repository
                 HttpClient httpClient = CreateHttpClient(uri);
 
                 var content = new StringContent(JsonConvert.SerializeObject(data));
-                Debug.WriteLine("content: " + content.ReadAsStringAsync().Result);
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
                 string jsonResult = string.Empty;

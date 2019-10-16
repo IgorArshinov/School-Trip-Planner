@@ -7,6 +7,5 @@ namespace SchoolTripPlannerUWP.Core.Contracts.Services.Data
     public interface ITeacherDataService
     {
         Task<IEnumerable<Teacher>> GetAllTeachersAsync();
-        Task<Teacher> GetTeacherByIdAsync(long id);
     }
 }

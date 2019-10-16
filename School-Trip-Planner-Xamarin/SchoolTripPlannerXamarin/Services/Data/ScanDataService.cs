@@ -73,9 +73,7 @@ namespace SchoolTripPlannerXamarin.Services.Data
                 Path = ApiConstants.BaseApiUriPart + ApiConstants.PostScanEndpoint
             };
 
-            await _genericRepository.PostAsync(builder.ToString(), scan);
-
-            return scan;
+            return await _genericRepository.PostAsync(builder.ToString(), scan);
         }
     }
 }

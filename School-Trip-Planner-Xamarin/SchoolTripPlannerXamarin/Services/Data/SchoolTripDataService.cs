@@ -68,12 +68,8 @@ namespace SchoolTripPlannerXamarin.Services.Data
                 Path = ApiConstants.BaseApiUriPart + ApiConstants.PostSchoolTripEndpoint
             };
 
-            var result = await _genericRepository.PostAsync(builder.ToString(), schoolTrip);
-
-            return schoolTrip;
+            return await _genericRepository.PostAsync(builder.ToString(), schoolTrip);
         }
-
-
 
         public async Task<IEnumerable<SchoolTrip>> GetAllSchoolTripsByTeacherIdAsync(long id)
         {
@@ -102,11 +98,11 @@ namespace SchoolTripPlannerXamarin.Services.Data
 
             UriBuilder builder = new UriBuilder(ApiConstants.BaseApiUrl)
             {
-                Path = ApiConstants.BaseApiUriPart + ApiConstants.SchoolTripUpdateEndpoint + id
+                Path = ApiConstants.BaseApiUriPart + ApiConstants.PutSchoolTripEndpoint + id
             };
 
-            await _genericRepository.PutAsync(builder.ToString(), schoolTrip);
-            return schoolTrip;
+            
+            return await _genericRepository.PutAsync(builder.ToString(), schoolTrip);
         }
     }
 }

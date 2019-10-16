@@ -9,7 +9,7 @@ namespace SchoolTripPlanner.Domain.DTOs.AutoMapperProfiles
         {
             CreateMap<Teacher, TeacherDTO>();
             CreateMap<TeacherDTO, Teacher>();
-            CreateMap<Scan, ScanDTO>();
+            CreateMap<Scan, ScanDTO>().ForMember(s => s.SchoolTrip, s => s.Ignore());
             CreateMap<ScanToddler, ScanToddlerDTO>().ForMember(s => s.Scan, s => s.Ignore());
             CreateMap<SchoolTrip, SchoolTripDTO>();
             CreateMap<SchoolTripToddler, SchoolTripToddlerDTO>().ForMember(s => s.SchoolTrip, s => s.Ignore());

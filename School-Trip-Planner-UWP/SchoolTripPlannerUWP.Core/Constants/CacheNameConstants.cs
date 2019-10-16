@@ -2,12 +2,12 @@
 {
     public static class CacheNameConstants
     {
-        public const string AllSchoolTrips = "SchoolTrips";
-        public const string AllClasses = "Classes";
-        public const string AllToddlers = "Toddlers";
-        public const string AllTeachers = "Teachers";
-        public const string TeacherById = "Teachers/";
-        public const string SchoolTripById = "SchoolTrips/";
-        public const string ToddlerById = "Toddlers/";
+        public const string AllSchoolTrips = "/schooltrips";
+        public const string AllClasses = "/classes";
+        public const string AllToddlers = "/toddlers";
+        public const string AllTeachers = "/teachers";
+        public const string TeacherById = AllTeachers + "/";
+        public const string SchoolTripById = AllSchoolTrips + "/";
+        public const string ToddlerById = AllToddlers + "/";
     }
 }

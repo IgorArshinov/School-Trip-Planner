@@ -5,7 +5,7 @@ namespace SchoolTripPlanner.Data.Builders
 {
     public class DatabaseInitializer
     {
-        public static void Initialize(ToddlerScanContext context)
+        public static void Initialize(SchoolTripPlannerContext context)
         {
             context.Database.EnsureCreated();
 //            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('ToddlerScanData.dbo.Classes', RESEED, 0)");

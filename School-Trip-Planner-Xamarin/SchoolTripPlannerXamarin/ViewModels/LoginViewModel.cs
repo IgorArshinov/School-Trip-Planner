@@ -19,7 +19,7 @@ namespace SchoolTripPlannerXamarin.ViewModels
         private readonly IDialogService _dialogService;
         private readonly ISettingsService _settingsService;
         private readonly ISyncService _syncService;
-        private INavigationService _navigationService;
+        private readonly INavigationService _navigationService;
         public ICommand LoginButtonCommand { get; }
 
         public string Password
@@ -79,7 +79,7 @@ namespace SchoolTripPlannerXamarin.ViewModels
                 {
                     if (exception.HttpCode == HttpStatusCode.BadRequest)
                     {
-                        await _dialogService.ShowDialog("Wachtwoord of gebruikersnaam is verkeerd!", DialogConstants.Fout, DialogConstants.Ok);
+                        await _dialogService.ShowAlert("Wachtwoord of gebruikersnaam is verkeerd!", DialogConstants.Fout, DialogConstants.Ok);
                     }
 
                     Debug.WriteLine(exception);

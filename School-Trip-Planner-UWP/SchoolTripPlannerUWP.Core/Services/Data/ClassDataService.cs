@@ -21,11 +21,11 @@ namespace SchoolTripPlannerUWP.Core.Services.Data
 
         public async Task<IEnumerable<Class>> GetAllClassesAsync()
         {
-            List<Class> classFromCache = await GetFromCache<List<Class>>(CacheNameConstants.AllClasses);
+            List<Class> classesFromCache = await GetFromCache<List<Class>>(CacheNameConstants.AllClasses);
 
-            if (classFromCache != null)
+            if (classesFromCache != null)
             {
-                return classFromCache;
+                return classesFromCache;
             }
 
             UriBuilder builder = new UriBuilder(ApiConstants.BaseApiUrl)

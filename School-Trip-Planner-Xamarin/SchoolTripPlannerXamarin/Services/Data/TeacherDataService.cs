@@ -2,7 +2,6 @@
 using SchoolTripPlannerXamarin.Constants;
 using SchoolTripPlannerXamarin.Contracts.Repository;
 using SchoolTripPlannerXamarin.Contracts.Services.Data;
-using SchoolTripPlannerXamarin.Contracts.Services.General;
 using SchoolTripPlannerXamarin.Models;
 using System;
 using System.Reactive.Linq;
@@ -13,11 +12,9 @@ namespace SchoolTripPlannerXamarin.Services.Data
     public class TeacherDataService : BaseService, ITeacherDataService
     {
         private readonly IGenericRepository _genericRepository;
-        private readonly ISettingsService _settingsService;
 
-        public TeacherDataService(IGenericRepository genericRepository, ISettingsService settingsService, IBlobCache cache = null) : base(cache)
+        public TeacherDataService(IGenericRepository genericRepository, IBlobCache cache = null) : base(cache)
         {
-            _settingsService = settingsService;
             _genericRepository = genericRepository;
         }
 
@@ -40,16 +37,11 @@ namespace SchoolTripPlannerXamarin.Services.Data
             return await _genericRepository.PostAsync<AuthenticationRequest, AuthenticationResponse>(builder.ToString(), authenticationRequest);
         }
 
-        public bool IsTeacherAuthenticated()
-        {
-            return !string.IsNullOrEmpty(_settingsService.TeacherIdSetting);
-        }
-
         public async Task<AuthenticationResponse> UpdateTeacher(long id, Teacher teacher)
         {
             UriBuilder builder = new UriBuilder(ApiConstants.BaseApiUrl)
             {
-                Path = ApiConstants.BaseApiUriPart + ApiConstants.TeacherUpdateEndpoint + id
+                Path = ApiConstants.BaseApiUriPart + ApiConstants.PutTeacherEndpoint + id
             };
 
             AuthenticationRequest updatedTeacher = new AuthenticationRequest()

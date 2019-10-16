@@ -21,8 +21,13 @@
 
                            LineBreakMode="NoWrap"
                            Style="{DynamicResource ListItemDetailTextStyle}"
-                           FontSize="13" />
+                           FontSize="16" />
                     <Label Text="{Binding ScanToddler.Toddler.Name}"
+
+                           LineBreakMode="NoWrap"
+                           Style="{DynamicResource ListItemTextStyle}"
+                           FontSize="16" />
+                    <Label Text="{Binding ScanToddler.Toddler.QrCode}"
 
                            LineBreakMode="NoWrap"
                            Style="{DynamicResource ListItemTextStyle}"

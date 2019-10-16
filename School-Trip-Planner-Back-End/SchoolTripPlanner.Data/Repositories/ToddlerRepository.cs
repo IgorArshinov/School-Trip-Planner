@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SchoolTripPlanner.Data.Contracts;
 using SchoolTripPlanner.Domain.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SchoolTripPlanner.Data.Repositories
 {
     public class ToddlerRepository : IToddlerRepository
     {
-        private readonly IToddlerScanContext _context;
+        private readonly ISchoolTripPlannerContext _context;
 
-        public ToddlerRepository(IToddlerScanContext context)
+        public ToddlerRepository(ISchoolTripPlannerContext context)
         {
             _context = context;
         }

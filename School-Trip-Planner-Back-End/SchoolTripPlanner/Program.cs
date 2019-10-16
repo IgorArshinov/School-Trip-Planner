@@ -20,7 +20,7 @@ namespace SchoolTripPlanner
 
                 try
                 {
-                    var context = services.GetRequiredService<ToddlerScanContext>();
+                    var context = services.GetRequiredService<SchoolTripPlannerContext>();
                     DatabaseInitializer.Initialize(context);
                 }
                 catch (Exception ex)

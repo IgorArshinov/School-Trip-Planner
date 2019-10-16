@@ -58,11 +58,10 @@ namespace SchoolTripPlannerXamarin.ViewModels
 
         public async void SchoolTripSelected(ListView listView)
         {
-            var schoolTrip = listView.SelectedItem as SchoolTripDTO;
-            if (schoolTrip == null)
+            if (SelectedSchoolTrip == null)
                 return;
 
-            await _navigationService.NavigateToAsync(typeof(SchoolTripDetailsViewModel), schoolTrip.Id);
+            await _navigationService.NavigateToAsync(typeof(SchoolTripDetailsViewModel), SelectedSchoolTrip.Id);
 
             SelectedSchoolTrip = null;
         }
@@ -81,7 +80,6 @@ namespace SchoolTripPlannerXamarin.ViewModels
 
             try
             {
-
                 SchoolTrips.Clear();
                 long.TryParse(_settingsService.TeacherIdSetting, out var id);
                 var schoolTrips = await _schoolTripDataService.GetAllSchoolTripsByTeacherIdAsync(id);
@@ -89,12 +87,6 @@ namespace SchoolTripPlannerXamarin.ViewModels
                     .OrderBy(s => s.CurrentState)
                     .ThenBy(s => s.StartDateTime.Subtract(DateTime.UtcNow).Duration())
                     .ToObservableCollection();
-
-//                SchoolTrips.Clear();
-//                
-//                SchoolTrips = (await _schoolTripDataService.GetAllSchoolTripsByTeacherIdAsync(id)).OrderBy(s => s.CurrentState)
-//                    .ThenBy(s => s.StartDate.Subtract(DateTime.UtcNow).Duration())
-//                    .ToObservableCollection();
             }
             catch (Exception exception)
             {

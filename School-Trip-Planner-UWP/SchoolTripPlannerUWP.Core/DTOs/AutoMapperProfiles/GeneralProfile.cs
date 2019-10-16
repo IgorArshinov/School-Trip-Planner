@@ -17,6 +17,8 @@ namespace SchoolTripPlannerUWP.Core.DTOs.AutoMapperProfiles
             CreateMap<ScanDTO, Scan>();
             CreateMap<SchoolTrip, SchoolTripDTO>();
             CreateMap<SchoolTripDTO, SchoolTrip>();
+            CreateMap<ScanToddlerDTO, ScanToddler>();
+            CreateMap<ScanToddler, ScanToddlerDTO>();
             CreateMap<SchoolTripToddler, SchoolTripToddlerDTO>();
             CreateMap<SchoolTripToddlerDTO, SchoolTripToddler>();
         }

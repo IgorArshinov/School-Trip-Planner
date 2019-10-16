@@ -7,8 +7,7 @@ namespace SchoolTripPlannerXamarin.Contracts.Services.Data
     {
         Task<AuthenticationResponse> RegisterTeacher(Teacher teacher);
         Task<AuthenticationResponse> AuthenticateTeacher(string username, string password);
-        bool IsTeacherAuthenticated();
-        Task<AuthenticationResponse> UpdateTeacher(long id, Teacher teacher);
+       Task<AuthenticationResponse> UpdateTeacher(long id, Teacher teacher);
         Task<Teacher> GetTeacherByIdAsync(long id);
 
     }

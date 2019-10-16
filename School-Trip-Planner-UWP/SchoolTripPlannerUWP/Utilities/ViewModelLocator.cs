@@ -2,15 +2,15 @@
 using AutoMapper;
 using GalaSoft.MvvmLight.Ioc;
 using SchoolTripPlannerUWP.Contracts;
-using SchoolTripPlannerUWP.Services;
-using SchoolTripPlannerUWP.ViewModels;
-using SchoolTripPlannerUWP.Views;
-using Windows.UI.Xaml;
 using SchoolTripPlannerUWP.Core.Contracts.Repository;
 using SchoolTripPlannerUWP.Core.Contracts.Services.Data;
 using SchoolTripPlannerUWP.Core.DTOs.AutoMapperProfiles;
 using SchoolTripPlannerUWP.Core.Repository;
 using SchoolTripPlannerUWP.Core.Services.Data;
+using SchoolTripPlannerUWP.Services;
+using SchoolTripPlannerUWP.ViewModels;
+using SchoolTripPlannerUWP.Views;
+using Windows.UI.Xaml;
 
 namespace SchoolTripPlannerUWP.Utilities
 {
@@ -21,10 +21,6 @@ namespace SchoolTripPlannerUWP.Utilities
 
         public ViewModelLocator()
         {
-            //            var config = new MapperConfiguration(cfg => { cfg.AddProfile<GeneralProfile>(); });
-
-            //            SimpleIoc.Register(() => new MapperConfiguration(cfg => { cfg.AddProfile<GeneralProfile>(); }));
-
             SimpleIoc.Register<INavigationServiceEx, NavigationServiceEx>();
             SimpleIoc.Register<IGenericRepository, GenericRepository>();
             SimpleIoc.Register<ISchoolTripDataService, SchoolTripDataService>();

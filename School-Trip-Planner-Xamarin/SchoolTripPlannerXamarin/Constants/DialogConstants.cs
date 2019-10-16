@@ -5,6 +5,6 @@
         public const string Ok = "Ok";
         public const string Fout = "Fout";
         public const string Info = "Info";
-        public static string Barcode = "Barcode";
+        
     }
 }

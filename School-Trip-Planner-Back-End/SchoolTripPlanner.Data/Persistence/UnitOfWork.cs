@@ -6,7 +6,7 @@ namespace SchoolTripPlanner.Data.Persistence
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly ToddlerScanContext _context;
+        private readonly SchoolTripPlannerContext _context;
         public ITeacherRepository TeacherRepository { get; private set; }
         public ISchoolTripRepository SchoolTripRepository { get; }
         public IClassRepository ClassRepository { get; }
@@ -14,7 +14,7 @@ namespace SchoolTripPlanner.Data.Persistence
         public IScanToddlerRepository ScanToddlerRepository { get; set; }
         public IScanRepository ScanRepository { get; set; }
 
-        public UnitOfWork(ToddlerScanContext context, IMapper mapper)
+        public UnitOfWork(SchoolTripPlannerContext context, IMapper mapper)
         {
             _context = context;
             TeacherRepository = new TeacherRepository(context, mapper);

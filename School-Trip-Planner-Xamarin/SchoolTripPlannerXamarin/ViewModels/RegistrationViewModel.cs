@@ -50,14 +50,14 @@ namespace SchoolTripPlannerXamarin.ViewModels
                     {
                         await _teacherSQLDataService.SaveTeacherAsync(authenticationResponse.Teacher);
                         await Xamarin.Essentials.SecureStorage.SetAsync(SettingsKeysConstants.TeacherIsRegistered, bool.TrueString);
-                        await _dialogService.ShowDialog("Succesvol geregistreerd!", DialogConstants.Info, DialogConstants.Ok);
+                        await _dialogService.ShowAlert("Succesvol geregistreerd!", DialogConstants.Info, DialogConstants.Ok);
                     }
                 }
                 catch (HttpRequestExceptionEx exception)
                 {
                     if (exception.HttpCode == HttpStatusCode.BadRequest)
                     {
-                        await _dialogService.ShowDialog("Deze gebruikersnaam wordt al gebruikt!", DialogConstants.Fout, DialogConstants.Ok);
+                        await _dialogService.ShowAlert("Deze gebruikersnaam wordt al gebruikt!", DialogConstants.Fout, DialogConstants.Ok);
                     }
 
                     Debug.WriteLine(exception);

@@ -3,7 +3,7 @@ using SchoolTripPlanner.Domain.Models;
 
 namespace SchoolTripPlanner.Data.Contracts
 {
-    public interface IToddlerScanContext
+    public interface ISchoolTripPlannerContext
     {
         DbSet<Toddler> Toddlers { get; set; }
         DbSet<Teacher> Teachers { get; set; }

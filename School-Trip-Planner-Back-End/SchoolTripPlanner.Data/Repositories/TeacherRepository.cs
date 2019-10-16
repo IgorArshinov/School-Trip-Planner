@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using SchoolTripPlanner.Data.Contracts;
 using SchoolTripPlanner.Domain.DTOs;
 using SchoolTripPlanner.Domain.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SchoolTripPlanner.Data.Repositories
 {
     public class TeacherRepository : ITeacherRepository
     {
-        private readonly IToddlerScanContext _context;
+        private readonly ISchoolTripPlannerContext _context;
         private IMapper _mapper;
 
-        public TeacherRepository(IToddlerScanContext context, IMapper mapper)
+        public TeacherRepository(ISchoolTripPlannerContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;

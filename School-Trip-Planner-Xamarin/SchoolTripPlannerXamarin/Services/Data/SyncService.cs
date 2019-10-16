@@ -33,7 +33,7 @@ namespace SchoolTripPlannerXamarin.Services.Data
             if (_connectionService.IsConnected && _settingsService.TeacherAccountNeedsUpdate.Equals(bool.TrueString))
             {
                 await GetLastModifiedTeacherAccount();
-                await _dialogService.ShowDialog("Uw gegevens zijn bijgewerkt!", DialogConstants.Info, DialogConstants.Ok);
+                await _dialogService.ShowAlert("Uw gegevens zijn bijgewerkt!", DialogConstants.Info, DialogConstants.Ok);
             }
         }
 

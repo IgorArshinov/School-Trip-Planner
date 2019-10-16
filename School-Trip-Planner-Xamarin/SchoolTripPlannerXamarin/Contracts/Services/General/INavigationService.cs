@@ -13,7 +13,8 @@ namespace SchoolTripPlannerXamarin.Contracts.Services.General
         Task NavigateToAsync(Type viewModelType, object parameter);
         Task NavigateToModallyAsync(Type viewModelType);
         Task NavigateToModallyAsync(Type viewModelType, object parameter);
-        Task NavigateBackAsync();
+        Task NavigateBackModallyAsync();
+        Task NavigateToPageModallyAsync(Page page);
         Task NavigateToTabAsync(Type viewModelType);
         Task NavigateToTabAsync(Type viewModelType, object parameter);
         Task RemoveLastFromBackStackAsync();

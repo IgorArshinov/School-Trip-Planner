@@ -5,7 +5,6 @@ using SchoolTripPlannerUWP.Core.Contracts.Services.Data;
 using SchoolTripPlannerUWP.Core.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 
@@ -28,20 +27,17 @@ namespace SchoolTripPlannerUWP.Core.Services.Data
             {
                 return teachersFromCache;
             }
-            else
+
+            UriBuilder builder = new UriBuilder(ApiConstants.BaseApiUrl)
             {
-                UriBuilder builder = new UriBuilder(ApiConstants.BaseApiUrl)
-                {
-                    Path = ApiConstants.BaseApiUriPart + ApiConstants.GetTeachersEndpoint,
-                    //                    Query = ApiConstants.Key
-                };
+                Path = ApiConstants.BaseApiUriPart + ApiConstants.GetTeachersEndpoint,
+            };
 
-                var teachers = await _genericRepository.GetAsync<List<Teacher>>(builder.ToString());
+            var teachers = await _genericRepository.GetAsync<List<Teacher>>(builder.ToString());
 
-                await Cache.InsertObject(CacheNameConstants.AllTeachers, teachers, DateTimeOffset.Now.AddSeconds(20));
+            await Cache.InsertObject(CacheNameConstants.AllTeachers, teachers, DateTimeOffset.Now.AddSeconds(20));
 
-                return teachers;
-            }
+            return teachers;
         }
 
         public async Task<Teacher> GetTeacherByIdAsync(long id)
@@ -50,7 +46,6 @@ namespace SchoolTripPlannerUWP.Core.Services.Data
 
             if (teacherFromCache != null)
             {
-                Debug.WriteLine("cache: ");
                 return teacherFromCache;
             }
 

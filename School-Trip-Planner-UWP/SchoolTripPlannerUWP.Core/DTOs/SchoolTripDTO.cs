@@ -1,6 +1,6 @@
 ﻿using SchoolTripPlannerUWP.Core.Enumerations;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace SchoolTripPlannerUWP.Core.DTOs
 {
@@ -10,11 +10,11 @@ namespace SchoolTripPlannerUWP.Core.DTOs
         public string Title { get; set; }
         public DateTime StartDateTime { get; set; }
         public DateTime EndDateTime { get; set; }
-        public ICollection<SchoolTripToddlerDTO> SchoolTripToddlers { get; set; }
+        public ObservableCollection<SchoolTripToddlerDTO> SchoolTripToddlers { get; set; }
         public long TeacherId { get; set; }
         public TeacherDTO Teacher { get; set; }
         public TimeSpan Duration => EndDateTime.Subtract(StartDateTime);
-        public ICollection<ScanDTO> Scans { get; set; }
+        public ObservableCollection<ScanDTO> Scans { get; set; }
 
         public DateTimeOffset StartDate
         {

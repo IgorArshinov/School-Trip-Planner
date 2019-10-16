@@ -1,6 +1,4 @@
-﻿using SchoolTripPlannerUWP.Core.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 
 namespace SchoolTripPlannerUWP.Core.DTOs
 {
@@ -9,8 +7,7 @@ namespace SchoolTripPlannerUWP.Core.DTOs
         public long Id { get; set; }
         public long SchoolTripId { get; set; }
         public SchoolTripDTO SchoolTrip { get; set; }
-        public ICollection<ScanToddler> ScanToddlers { get; set; }
+        public ObservableCollection<ScanToddlerDTO> ScanToddlers { get; set; }
         public string Title { get; set; }
-        public DateTime CreatedDateTime { get; set; }
     }
 }

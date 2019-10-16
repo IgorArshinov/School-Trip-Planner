@@ -6,7 +6,7 @@ using SchoolTripPlannerXamarin.Contracts.Services.General;
 using SchoolTripPlannerXamarin.DTOs;
 using SchoolTripPlannerXamarin.Models;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -22,7 +22,6 @@ namespace SchoolTripPlannerXamarin.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IScanDataService _scanDataService;
         private readonly IMapper _mapper;
-        private readonly IDialogService _dialogService;
         public ICommand CancelToolbarItemCommand { get; }
         public ICommand AddToolbarItemCommand { get; }
 
@@ -32,19 +31,19 @@ namespace SchoolTripPlannerXamarin.ViewModels
             set => Set(ref _scan, value);
         }
 
-        public NewSchoolTripScanViewModel(IDialogService dialogService, INavigationService navigationService, IScanDataService scanDataService, IMapper mapper)
+        public NewSchoolTripScanViewModel(INavigationService navigationService, IScanDataService scanDataService, IMapper mapper)
         {
             _scanDataService = scanDataService;
             _navigationService = navigationService;
             _mapper = mapper;
-            _dialogService = dialogService;
+
             CancelToolbarItemCommand = new Command(CancelAddNewScan);
             AddToolbarItemCommand = new Command(AddNewScan);
         }
 
         private async void CancelAddNewScan()
         {
-            await _navigationService.NavigateBackAsync();
+            await _navigationService.NavigateBackModallyAsync();
         }
 
         public override async Task InitializeAsync(object parameter)
@@ -59,18 +58,22 @@ namespace SchoolTripPlannerXamarin.ViewModels
             {
                 var scanSchoolTripId = _selectedSchoolTrip.Id;
 
-                Scan.ScanToddlers = new List<ScanToddlerDTO>();
+                Scan.ScanToddlers = new ObservableCollection<ScanToddlerDTO>();
                 Scan.SchoolTripId = scanSchoolTripId;
+
                 foreach (var schoolTripToddler in _selectedSchoolTrip.SchoolTripToddlers)
                 {
                     Scan.ScanToddlers.Add(new ScanToddlerDTO {Toddler = schoolTripToddler.Toddler, ToddlerId = schoolTripToddler.ToddlerId, ToddlerIsScanned = false});
                 }
 
                 var scan = _mapper.Map<Scan>(Scan);
-                await _scanDataService.PostScan(scan);
+                var scanResult = await _scanDataService.PostScan(scan);
                 await BlobCache.LocalMachine.Invalidate(CacheNameConstants.SchoolTripById + scanSchoolTripId);
-                MessagingCenter.Send(this, MessagingConstants.AddSchoolTripScan, Scan);
-                await _navigationService.NavigateBackAsync();
+                Scan.Id = scanResult.Id;
+                _selectedSchoolTrip.Scans.Add(Scan);
+
+//                MessagingCenter.Send(this, MessagingConstants.AddSchoolTripScan, _selectedSchoolTrip);
+                await _navigationService.NavigateBackModallyAsync();
             }
             catch (Exception exception)
             {

@@ -8,6 +8,6 @@ namespace SchoolTripPlannerXamarin.Models
         public SchoolTrip SchoolTrip { get; set; }
         public long SchoolTripId { get; set; }
         public string Title { get; set; }
-        public List<ScanToddler> ScanToddlers { get; set; }
+        public ICollection<ScanToddler> ScanToddlers { get; set; }
     }
 }

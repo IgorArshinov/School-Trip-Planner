@@ -74,8 +74,6 @@
                                 <TextBlock Padding="0,0,0,10" Text="{Binding Id}" />
                                 <TextBlock Text="Titel:" />
                                 <TextBlock Padding="0,0,0,10" Text="{Binding Title}" />
-                                <TextBlock Text="Datum:" />
-                                <TextBlock Padding="0,0,0,10" Text="{Binding CreatedDateTime}" />
                                 <TextBlock Text="Kleuters:" />
                                 <ListView x:Name="ToddlerScansListView"
                                           ItemsSource="{Binding ScanToddlers}"

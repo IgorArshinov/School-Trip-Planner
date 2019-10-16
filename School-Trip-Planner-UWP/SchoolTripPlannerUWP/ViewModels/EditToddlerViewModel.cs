@@ -91,8 +91,7 @@ namespace SchoolTripPlannerUWP.ViewModels
                 await _toddlerDataService.PutToddler(toddler.Id, toddler);
                 await BlobCache.LocalMachine.Invalidate(CacheNameConstants.AllToddlers);
                 await BlobCache.LocalMachine.Invalidate(CacheNameConstants.AllSchoolTrips);
-                await GetAllToddlersAsync();
-                //            await BlobCache.LocalMachine.Invalidate(CacheNameConstants.AllToddlers);
+                Toddlers[Toddlers.IndexOf(Toddler)] = ToddlerToEdit;
             }
             catch (Exception exception)
             {
@@ -159,7 +158,7 @@ namespace SchoolTripPlannerUWP.ViewModels
             }
 
             PrinterIsSupported = true;
-            //            var frame = sender as Frame;
+
             _printHelper = new PrintHelper(navigationEventArgs.Content as Page);
             _printHelper.RegisterForPrinting();
             _printHelper.PreparePrintContent(new PrintEditedToddler());

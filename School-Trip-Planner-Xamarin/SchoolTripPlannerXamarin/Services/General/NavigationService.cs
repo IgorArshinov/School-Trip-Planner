@@ -75,14 +75,19 @@ namespace SchoolTripPlannerXamarin.Services.General
             return InternalNavigateToModallyAsync(viewModelType, parameter);
         }
 
+        public async Task NavigateToPageModallyAsync(Page page)
+        {
+            await CurrentShell.Navigation.PushModalAsync(page);
+        }
+
         public async Task ClearBackStack()
         {
             await CurrentShell.Navigation.PopToRootAsync();
         }
 
-        public async Task NavigateBackAsync()
+        public async Task NavigateBackModallyAsync()
         {
-            await CurrentShell.Navigation.PopModalAsync();
+            await CurrentShell.Navigation.PopModalAsync(true);
         }
 
         public virtual Task RemoveLastFromBackStackAsync()
